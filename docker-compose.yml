@@ -1,0 +1,36 @@
+version: '2'
+
+volumes:
+  zbx-db:
+
+
+services:
+  zbx-db:
+    image: zbx-db
+    volumes:
+      - zbx-db:/var/lib/mysql
+    expose:
+      - "3306"
+    user: mysql:mysql
+    command: /usr/bin/mysqld_safe --basedir=/usr
+
+  zbx-server:
+    image: zbx-server
+    links:
+      - zbx-db
+    ports:
+      - "10051:10051"
+    environment:
+      - MIBDIRS=/usr/share/snmp/mibs
+      - MIBS=ALL
+    user: zabbix:zabbix
+    command: /usr/sbin/zabbix_server -f -c /etc/zabbix/zabbix_server.conf
+
+  zbx-frontend:
+    image: zbx-frontend
+    links:
+      - zbx-db
+      - zbx-server
+    ports:
+      - "80:80"
+    command: /usr/sbin/httpd -DFOREGROUND
