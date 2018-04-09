@@ -6,7 +6,7 @@ volumes:
 
 services:
   zbx-db:
-    image: zbx-db
+    image: mariadb
     volumes:
       - zbx-db:/var/lib/mysql
     expose:
