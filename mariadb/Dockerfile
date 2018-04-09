@@ -1,10 +1,6 @@
-FROM zbx-base
+FROM centos:centos7
 
-RUN yum install -y mariadb-server && \
-    cd /root && \
-    yumdownloader miracle-zbx-server-mysql
-
-COPY ./prepare-varlib.sh ./create-zbxdb.sh /root/
+RUN yum install -y mariadb-server
 
 EXPOSE 3306
 
