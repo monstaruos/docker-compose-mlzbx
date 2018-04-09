@@ -1,5 +1,15 @@
 #!/bin/sh
 
+while :
+do
+  mysqladmin ping -hzbx-db -uzabbix -pzabbix
+  if [ $? = 0 ]; then
+    break
+  fi
+  sleep 1
+done
+
+
 cd $HOME
 
 sqlfilename=create.sql.gz
