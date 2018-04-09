@@ -1,8 +1,4 @@
 #!/bin/sh
 
-docker-compose run --rm --user root zbx-db /root/prepare-varlib.sh
-
-# docker-compose run -d zbx-db
-docker-compose up -d
-docker-compose exec --user root zbx-db /root/create-zbxdb.sh
-docker-compose down
+docker-compose run --rm --user root -v $(pwd)/server:/root/host zbx-db     /root/host/create-zbxdb.sh
+docker-compose run --rm --user root -v $(pwd)/server:/root/host zbx-server /root/host/init-zbxdb.sh
