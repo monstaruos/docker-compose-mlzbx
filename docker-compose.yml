@@ -11,7 +11,6 @@ services:
       - zbx-db:/var/lib/mysql
     expose:
       - "3306"
-    user: mysql:mysql
     command: /usr/bin/mysqld_safe --basedir=/usr
 
   zbx-server:
