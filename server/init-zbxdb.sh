@@ -10,17 +10,7 @@ do
 done
 
 
-cd $HOME
-
-sqlfilename=create.sql.gz
-rpmfile=$(ls miracle-zbx-server-mysql-*.rpm)
-
-
-mkdir tmp
-cd tmp
-rpm2cpio ../$rpmfile | cpio --extract -d
-cd ..
-
-sqlfile=$(find tmp -type f -name $sqlfilename)
+version=$(rpm -qi miracle-zbx-server-mysql | grep Version | cut -d ':' -f 2 | sed -e 's/ //g')
+sqlfile=/usr/share/doc/miracle-zbx-server-mysql-$version/create.sql.gz
 
 zcat $sqlfile | mysql -hzbx-db -uzabbix -pzabbix zabbix
