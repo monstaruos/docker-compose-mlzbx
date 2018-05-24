@@ -6,12 +6,13 @@ volumes:
 
 services:
   zbx-db:
-    image: mariadb
+    image: mysql:5.7
     volumes:
       - zbx-db:/var/lib/mysql
     expose:
       - "3306"
-    command: /usr/bin/mysqld_safe --basedir=/usr
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
 
   zbx-server:
     image: zbx-server
