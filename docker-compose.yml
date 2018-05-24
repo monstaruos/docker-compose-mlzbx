@@ -34,3 +34,12 @@ services:
     ports:
       - "80:80"
     command: /usr/sbin/httpd -DFOREGROUND
+
+  zbx-agent:
+    image: zbx-agent
+    links:
+      - zbx-server
+    expose:
+      - "10050"
+    user: zabbix:zabbix
+    command: /usr/sbin/zabbix_agentd -f -c /etc/zabbix/zabbix_agentd.conf
