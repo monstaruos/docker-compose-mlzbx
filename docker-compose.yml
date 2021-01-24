@@ -20,6 +20,9 @@ services:
 
   zbx-server:
     image: zbx-server
+    volumes:
+      - ./base/scripts:/etc/zabbix/alertscripts
+      - ./base/scripts:/etc/zabbix/externalscripts
     links:
       - zbx-db
     ports:
@@ -32,6 +35,9 @@ services:
 
   zbx-agent:
     image: zbx-agent
+    volumes:
+      - ./base/scripts:/etc/zabbix/externalscripts
+      - ./agent/conf.d:/etc/zabbix/zabbix_agentd.d
     links:
       - zbx-server
     expose:
