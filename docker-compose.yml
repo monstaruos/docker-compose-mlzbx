@@ -1,8 +1,12 @@
 version: '3'
 
+networks:
+  default:
+    external:
+      name: zabbix
+
 volumes:
   zbx-db:
-
 
 services:
   zbx-db:
@@ -25,15 +29,6 @@ services:
       - MIBS=ALL
     user: zabbix:zabbix
     command: /usr/sbin/zabbix_server -f -c /etc/zabbix/zabbix_server.conf
-
-  zbx-frontend:
-    image: zbx-frontend
-    links:
-      - zbx-db
-      - zbx-server
-    ports:
-      - "80:80"
-    command: /usr/sbin/httpd -DFOREGROUND
 
   zbx-agent:
     image: zbx-agent
