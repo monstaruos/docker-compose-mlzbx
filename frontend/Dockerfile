@@ -2,9 +2,11 @@ FROM zbx-base
 
 RUN localedef -f UTF-8 -i ja_JP ja_JP && \
     yum install -y miracle-zbx-web-{mysql,japanese} && \
-    sed -i -e 's/^#//g' /etc/httpd/conf.d/zabbix.conf
+    sed -i -e 's/^#//g' -e '/AllowOverride/s/$/ AuthConfig/' /etc/httpd/conf.d/zabbix.conf
 
 COPY ./zabbix.conf.php /etc/zabbix/web/
+COPY ./_htaccess /usr/share/zabbix/.htaccess
+COPY ./_htdigest /etc/zabbix/web/.htdigest
 
 EXPOSE 80
 

@@ -1,0 +1,4 @@
+AuthType Digest
+AuthName limited
+AuthUserFile /etc/zabbix/web/.htdigest
+Require valid-user
