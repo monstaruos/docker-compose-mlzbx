@@ -1,0 +1,8 @@
+FROM zbx-frontend
+
+ARG fqdn
+
+RUN yum install -y mod_ssl && \
+    sed -i -E -e 's/^#(DocumentRoot)/\1/' -e "s/^(SSLCertificateFile) .*$/\1 \/etc\/letsencrypt\/live\/$fqdn\/cert.pem/" -e "s/^(SSLCertificateKeyFile) .*$/\1 \/etc\/letsencrypt\/live\/$fqdn\/privkey.pem/" -e "s/^#(SSLCertificateChainFile) .*$/\1 \/etc\/letsencrypt\/live\/$fqdn\/chain.pem/" /etc/httpd/conf.d/ssl.conf
+
+EXPOSE 443

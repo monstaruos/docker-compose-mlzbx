@@ -1,0 +1,15 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: zabbix
+
+services:
+  zbx-frontend-ssl:
+    image: zbx-frontend-ssl
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    ports:
+      - "443:443"
+    command: /usr/sbin/httpd -DFOREGROUND
