@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for x in base server agent; do
+for x in base server; do
   cd $x
   docker build -t zbx-$x .
   cd ..

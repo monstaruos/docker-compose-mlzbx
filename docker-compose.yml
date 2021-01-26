@@ -32,15 +32,3 @@ services:
       - MIBS=ALL
     user: zabbix:zabbix
     command: /usr/sbin/zabbix_server -f -c /etc/zabbix/zabbix_server.conf
-
-  zbx-agent:
-    image: zbx-agent
-    volumes:
-      - ./base/scripts:/etc/zabbix/externalscripts
-      - ./agent/conf.d:/etc/zabbix/zabbix_agentd.d
-    links:
-      - zbx-server
-    expose:
-      - "10050"
-    user: zabbix:zabbix
-    command: /usr/sbin/zabbix_agentd -f -c /etc/zabbix/zabbix_agentd.conf
