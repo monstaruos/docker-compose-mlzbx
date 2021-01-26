@@ -1,0 +1,15 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: zabbix
+
+services:
+  zbx-frontend-lighttpd-ssl:
+    image: zbx-frontend-lighttpd-ssl
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    ports:
+      - "443:443"
+    command: /usr/sbin/lighttpd -D -f /etc/lighttpd/lighttpd.conf

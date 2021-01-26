@@ -1,0 +1,13 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: zabbix
+
+services:
+  zbx-frontend-lighttpd:
+    image: zbx-frontend-lighttpd
+    ports:
+      - "80:80"
+    command: /usr/sbin/lighttpd -D -f /etc/lighttpd/lighttpd.conf
