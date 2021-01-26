@@ -1,4 +1,4 @@
-FROM zbx-frontend
+FROM zbx-frontend-apache
 
 ARG fqdn
 

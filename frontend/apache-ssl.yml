@@ -6,8 +6,8 @@ networks:
       name: zabbix
 
 services:
-  zbx-frontend-ssl:
-    image: zbx-frontend-ssl
+  zbx-frontend-apache-ssl:
+    image: zbx-frontend-apache-ssl
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
     ports:

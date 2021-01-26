@@ -6,8 +6,8 @@ networks:
       name: zabbix
 
 services:
-  zbx-frontend:
-    image: zbx-frontend
+  zbx-frontend-apache:
+    image: zbx-frontend-apache
     ports:
       - "80:80"
     command: /usr/sbin/httpd -DFOREGROUND
