@@ -2,6 +2,6 @@ FROM zbx-frontend-lighttpd
 
 ARG fqdn
 
-RUN sed -i -E -e 's/^(server\.port).*/\1 = 443/' -e '/^# *ssl.privkey/issl.engine = "enable"' -e "s/^# *(ssl.privkey).*/\1 = \"\/etc\/letsencrypt\/live\/$fqdn\/privkey.pem\"/" -e "s/^# *(ssl.pemfile).*cert.pem.*/\1 = \"\/etc\/letsencrypt\/live\/$fqdn\/fullchain.pem\"/" /etc/lighttpd/lighttpd.conf && \
+RUN sed -i -E -e 's/^(server\.port).*/\1 = 443/' -e '/^# *ssl.privkey/issl.engine = "enable"' -e "s/^# *(ssl.privkey).*/\1 = \"\/etc\/letsencrypt\/live\/$fqdn\/privkey.pem\"/" -e "s/^# *(ssl.pemfile).*cert.pem.*/\1 = \"\/etc\/letsencrypt\/live\/$fqdn\/fullchain.pem\"/" /etc/lighttpd/lighttpd.conf
 
 EXPOSE 443
