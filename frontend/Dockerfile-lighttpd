@@ -1,10 +1,9 @@
 FROM zbx-base
 
 RUN localedef -f UTF-8 -i ja_JP ja_JP && \
-    yum install -y epel-release && \
-    yum install -y lighttpd-fastcgi && \
     groupadd -r -g 48 apache && useradd -r -u 48 -g apache -c "Apache" -s /sbin/nologin -d /usr/share/httpd apache && \
-    yum install -y php-{bcmath,cli,gd,mbstring,mysql,xml} traceroute && \
+    yum install -y epel-release && \
+    yum install -y lighttpd-fastcgi php-{bcmath,cli,gd,mbstring,mysql,xml} traceroute && \
     yumdownloader --destdir=/root miracle-zbx-web{,-mysql} && rpm -ivh --nodeps /root/miracle-zbx-web{,-mysql}*.rpm && rm /root/miracle*.rpm && \
     yum install -y miracle-zbx-web-japanese && \
     chown lighttpd:lighttpd /etc/zabbix/web && \
