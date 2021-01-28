@@ -11,9 +11,9 @@ RUN localedef -f UTF-8 -i ja_JP ja_JP && \
     sed -i -E -e 's/^#( +"mod_auth".*)/\1/' -e 's/^#( +"mod_alias".*)/\1/' -e 's/^# *include.*(conf\.d\/fastcgi\.conf).*/include "\1"/' -e '$ainclude "conf.d/auth.conf"' /etc/lighttpd/modules.conf && \
     sed -i -E -e 's/^; *(cgi.fix_pathinfo) *= *1.*/\1 = 1/' -e 's/^; *(date.timezone).*/\1 = Asia\/Tokyo/' -e 's/^(post_max_size).*/\1 = 16M/' -e 's/^(max_execution_time).*/\1 = 300/' -e 's/^(max_input_time).*/\1 = 300/' /etc/php.ini
 
-COPY ./auth.conf /etc/lighttpd/conf.d/
-COPY ./fastcgi.conf /etc/lighttpd/conf.d/
-COPY ./zabbix.conf /etc/lighttpd/conf.d/
+COPY ./lighttpd/auth.conf /etc/lighttpd/conf.d/
+COPY ./lighttpd/fastcgi.conf /etc/lighttpd/conf.d/
+COPY ./lighttpd/zabbix.conf /etc/lighttpd/conf.d/
 COPY ./zabbix.conf.php /etc/zabbix/web/
 COPY ./_htdigest /etc/zabbix/web/.htdigest
 
