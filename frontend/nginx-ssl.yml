@@ -1,0 +1,14 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: zabbix
+
+services:
+  zbx-frontend-nginx-ssl:
+    image: zbx-frontend-nginx-ssl
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    ports:
+      - "443:443"

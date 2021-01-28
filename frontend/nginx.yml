@@ -1,0 +1,12 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: zabbix
+
+services:
+  zbx-frontend-nginx:
+    image: zbx-frontend-nginx
+    ports:
+      - "80:80"

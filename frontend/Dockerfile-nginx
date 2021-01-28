@@ -1,0 +1,18 @@
+FROM zbx-base
+
+RUN groupadd -r -g 48 apache && useradd -r -u 48 -g apache -c "Apache" -s /sbin/nologin -d /usr/share/httpd apache && \
+    yum install -y epel-release && \
+    yum install -y nginx php-fpm php-{bcmath,cli,gd,mbstring,mysql,xml} traceroute && \
+    yumdownloader --destdir=/root miracle-zbx-web{,-mysql} && rpm -ivh --nodeps /root/miracle-zbx-web{,-mysql}*.rpm && rm /root/miracle*.rpm && \
+    yum install -y miracle-zbx-web-japanese && \
+    mkdir /var/lib/php/session && \
+    chown nginx:nginx /var/lib/php/session && \
+    chown nginx:nginx /etc/zabbix/web && \
+    sed -i -E -e '/ +listen +\[::\]:/s/^/#/' /etc/nginx/nginx.conf && \
+    sed -i -E -e 's/^(listen) *= *.*$/\1 = \/tmp\/php-fpm.sock/' -e 's/^(user).*/\1 = nginx/' -e 's/^(group).*/\1 = nginx/' /etc/php-fpm.d/www.conf && \
+    sed -i -E -e 's/^; *(cgi.fix_pathinfo) *= *1.*/\1 = 1/' -e 's/^; *(date.timezone).*/\1 = Asia\/Tokyo/' -e 's/^(post_max_size).*/\1 = 16M/' -e 's/^(max_execution_time).*/\1 = 300/' -e 's/^(max_input_time).*/\1 = 300/' /etc/php.ini
+
+COPY ./nginx/zabbix.conf /etc/nginx/default.d
+COPY ./zabbix.conf.php /etc/zabbix/web/
+
+EXPOSE 80
