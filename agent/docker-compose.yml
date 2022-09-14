@@ -1,0 +1,17 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: zabbix
+
+services:
+  zbx-agent:
+    image: zbx-agent
+    volumes:
+      - ../base/scripts:/etc/zabbix/externalscripts
+      - ./conf.d:/etc/zabbix/zabbix_agentd.d
+    expose:
+      - "10050"
+    user: zabbix:zabbix
+    command: /usr/sbin/zabbix_agentd -f -c /etc/zabbix/zabbix_agentd.conf
