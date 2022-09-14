@@ -16,5 +16,5 @@ docker-compose down
 
 # initialize db
 
-docker-compose run --rm --user root -v $(pwd)/server:/root/host zbx-server /root/host/init-zbxdb.sh
+docker-compose run --rm --user root -v $(pwd):/root/host zbx-server /root/host/init-zbxdb.sh
 docker-compose down
