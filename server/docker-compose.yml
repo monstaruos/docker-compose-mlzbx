@@ -2,8 +2,8 @@ version: '3'
 
 networks:
   default:
-    external:
-      name: zabbix
+    external: true
+    name: zabbix
 
 volumes:
   zbx-db:
