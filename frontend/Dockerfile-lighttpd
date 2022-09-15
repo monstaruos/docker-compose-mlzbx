@@ -6,13 +6,12 @@ RUN groupadd -r -g 48 apache && useradd -r -u 48 -g apache -c "Apache" -s /sbin/
     yumdownloader --destdir=/root miracle-zbx-web{,-mysql} && rpm -ivh --nodeps /root/miracle-zbx-web{,-mysql}*.rpm && rm /root/miracle*.rpm && \
     yum install -y miracle-zbx-web-japanese && \
     chown lighttpd:lighttpd /etc/zabbix/web && \
-    sed -i -E -e 's/^(server\.use-ipv6).*/\1 = "disable"/' -e '$ainclude "conf.d/zabbix.conf"' /etc/lighttpd/lighttpd.conf && \
-    sed -i -E -e 's/^#( +"mod_auth".*)/\1/' -e 's/^#( +"mod_alias".*)/\1/' -e 's/^# *include.*(conf\.d\/fastcgi\.conf).*/include "\1"/' -e '$ainclude "conf.d/auth.conf"' /etc/lighttpd/modules.conf && \
+    sed -i -E -e 's/^(server\.use-ipv6).*/\1 = "disable"/' -e 's/^(server\.document-root).*/\1 = "\/usr\/share\/zabbix"/' /etc/lighttpd/lighttpd.conf && \
+    sed -i -E -e 's/^#( +"mod_auth".*)/\1/' -e 's/^# *include.*(conf\.d\/fastcgi\.conf).*/include "\1"/' -e '$ainclude "conf.d/auth.conf"' /etc/lighttpd/modules.conf && \
     sed -i -E -e 's/^; *(cgi.fix_pathinfo) *= *1.*/\1 = 1/' -e 's/^; *(date.timezone).*/\1 = Asia\/Tokyo/' -e 's/^(post_max_size).*/\1 = 16M/' -e 's/^(max_execution_time).*/\1 = 300/' -e 's/^(max_input_time).*/\1 = 300/' /etc/php.ini
 
 COPY ./lighttpd/auth.conf /etc/lighttpd/conf.d/
 COPY ./lighttpd/fastcgi.conf /etc/lighttpd/conf.d/
-COPY ./lighttpd/zabbix.conf /etc/lighttpd/conf.d/
 COPY ./zabbix.conf.php /etc/zabbix/web/
 COPY ./_htdigest /etc/zabbix/web/.htdigest
 
