@@ -1,7 +1,8 @@
 FROM zbx-base
 
 RUN yum install -y miracle-zbx-web-{mysql,japanese} && \
-    sed -i -e 's/^#//g' -e '/AllowOverride/s/$/ AuthConfig/' /etc/httpd/conf.d/zabbix.conf
+    sed -i -E -e 's/^(DocumentRoot).*$/\1 "\/usr\/share\/zabbix"/' /etc/httpd/conf/httpd.conf && \
+    sed -i -E -e 's/^#//g' -e '/AllowOverride/s/$/ AuthConfig/' -e 's/^(Alias)/#\1/' /etc/httpd/conf.d/zabbix.conf
 
 COPY ./zabbix.conf.php /etc/zabbix/web/
 COPY ./_htaccess /usr/share/zabbix/.htaccess
