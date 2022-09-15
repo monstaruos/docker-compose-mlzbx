@@ -2,6 +2,6 @@ FROM zbx-frontend-nginx
 
 ARG fqdn
 
-RUN sed -i -E -e '/ +listen +80/s/80/443 ssl/' -e "/ +root/a ssl_certificate     /etc/letsencrypt/live/$fqdn/fullchain.pem;" -e "/ +root/a ssl_certificate_key /etc/letsencrypt/live/$fqdn/privkey.pem;" /etc/nginx/nginx.conf
+RUN sed -i -E -e '/ +listen +80/s/80/443 ssl/' -e "/^ +root/a ssl_certificate     /etc/letsencrypt/live/$fqdn/fullchain.pem;" -e "/^ +root/a ssl_certificate_key /etc/letsencrypt/live/$fqdn/privkey.pem;" /etc/nginx/nginx.conf
 
 EXPOSE 443
