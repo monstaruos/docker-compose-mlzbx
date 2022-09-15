@@ -8,7 +8,7 @@ RUN groupadd -r -g 48 apache && useradd -r -u 48 -g apache -c "Apache" -s /sbin/
     mkdir /var/lib/php/session && \
     chown nginx:nginx /var/lib/php/session && \
     chown nginx:nginx /etc/zabbix/web && \
-    sed -i -E -e '/ +listen +\[::\]:/s/^/#/' /etc/nginx/nginx.conf && \
+    sed -i -E -e '/ +listen +\[::\]:/s/^/#/' -e 's/( +root) .*$/\1 \/usr\/share\/zabbix;/' /etc/nginx/nginx.conf && \
     sed -i -E -e 's/^(listen) *= *.*$/\1 = \/tmp\/php-fpm.sock/' -e 's/^(user).*/\1 = nginx/' -e 's/^(group).*/\1 = nginx/' /etc/php-fpm.d/www.conf && \
     sed -i -E -e 's/^; *(cgi.fix_pathinfo) *= *1.*/\1 = 1/' -e 's/^; *(date.timezone).*/\1 = Asia\/Tokyo/' -e 's/^(post_max_size).*/\1 = 16M/' -e 's/^(max_execution_time).*/\1 = 300/' -e 's/^(max_input_time).*/\1 = 300/' /etc/php.ini
 
